@@ -71,12 +71,10 @@ const disableSubmit = status => {
 
 const finishUpload = (element, endpoint, bucket, objectKey) => {
   const link = element.querySelector('.file-link');
-  const url = element.querySelector('.file-url');
-  url.value = endpoint + '/' + bucket + '/' + objectKey;
-  link.setAttribute('href', url.value);
-  link.innerHTML = parseNameFromUrl(url.value)
-    .split('/')
-    .pop();
+  const key = element.querySelector('.file-key');
+  key.value = objectKey;
+  link.setAttribute('href', endpoint + '/' + bucket + '/' + objectKey);
+  link.innerHTML = objectKey.split('/').pop();
   element.className = 's3direct link-active';
   element.querySelector('.bar').style.width = '0%';
   disableSubmit(false);
@@ -263,13 +261,13 @@ const checkFileAndInitiateUpload = event => {
 const removeUpload = e => {
   e.preventDefault();
   const el = e.target.parentElement;
-  el.querySelector('.file-url').value = '';
+  el.querySelector('.file-key').value = '';
   el.querySelector('.file-input').value = '';
   el.className = 's3direct form-active';
 };
 
 const addHandlers = el => {
-  const url = el.querySelector('.file-url');
+  const url = el.querySelector('.file-key');
   const input = el.querySelector('.file-input');
   const remove = el.querySelector('.file-remove');
   const status = url.value === '' ? 'form' : 'link';
