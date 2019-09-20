@@ -39,7 +39,7 @@ class S3DirectField(Field):
 
     def formfield(self, *args, **kwargs):
         kwargs['widget'] = self.widget
-        return S3DirectFormField(*args, **kwargs)
+        return super(S3DirectField, self).formfield(*args, form_class=S3DirectFormField, **kwargs)
 
     def from_db_value(self, value, expression, connection):
         if value is None:
