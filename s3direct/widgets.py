@@ -1,12 +1,15 @@
 from __future__ import unicode_literals
 
 import os
+
 from django.forms import widgets
 from django.utils.safestring import mark_safe
 from django.urls import reverse
 from django.template.loader import render_to_string
 from django.utils.http import urlunquote_plus
 from django.conf import settings
+
+from .types import S3DirectFile
 
 
 class S3DirectWidget(widgets.TextInput):
@@ -19,11 +22,12 @@ class S3DirectWidget(widgets.TextInput):
         super(S3DirectWidget, self).__init__(*args, **kwargs)
 
     def render(self, name, value, attrs=None, **kwargs):
-        if value:
+        if isinstance(value, S3DirectFile):
             file_key = value.key
             file_url = value.url
             file_name = value.key
-        else:
+        else:  # TODO
+            print('Unknown value type "', type(value), '" with value', value)
             file_key = ''
             file_url = ''
             file_name = ''

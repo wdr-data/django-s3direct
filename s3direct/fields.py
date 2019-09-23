@@ -1,17 +1,8 @@
 from django.db.models import Field
 from django.forms.fields import CharField
 
+from .types import S3DirectFile
 from .widgets import S3DirectWidget
-from .utils import get_url
-
-
-class S3DirectFile():
-    def __init__(self, key):
-        self.key = key
-        self.url = get_url(self.key) if key else key
-
-    def __str__(self):
-        return self.url
 
 
 class S3DirectFormField(CharField):
