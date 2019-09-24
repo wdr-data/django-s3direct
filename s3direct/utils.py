@@ -4,6 +4,7 @@ from collections import namedtuple
 
 from django.conf import settings
 from django.utils.six.moves.urllib.parse import urljoin
+from django.utils.encoding import escape_uri_path
 
 # django-s3direct accesses AWS credentials from Django config and provides
 # an optional ability to retrieve credentials from EC2 instance profile if
@@ -67,7 +68,7 @@ def get_key(key, file_name, dest):
 def get_url(object_key):
     endpoint = getattr(settings, 'AWS_S3_ENDPOINT_URL', None)
     bucket_name = getattr(settings, 'AWS_STORAGE_BUCKET_NAME', None)
-    return '%s/%s/%s' % (endpoint, bucket_name, object_key)
+    return '%s/%s/%s' % (endpoint, bucket_name, escape_uri_path(object_key))
 
 
 def get_aws_credentials():
