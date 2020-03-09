@@ -3,7 +3,7 @@ import hmac
 from collections import namedtuple
 
 from django.conf import settings
-from django.utils.six.moves.urllib.parse import urljoin
+from posixpath import join as urljoin
 from django.utils.encoding import escape_uri_path
 
 # django-s3direct accesses AWS credentials from Django config and provides
